@@ -165,7 +165,7 @@ class GohlkeGrabber:
                 best_match = a
 
         if best_match is not None:
-            p = Path(save_location) / Path(best_match['link']).stem
+            p = Path(save_location) / Path(best_match['link']).name
             if not p.is_file() or overwrite:
                 request.urlretrieve(best_match['link'], p)
         else:
