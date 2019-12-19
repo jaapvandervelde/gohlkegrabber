@@ -11,7 +11,20 @@ Of course, once you have a wheel (a file with the `.whl` extension), you can ins
 pip install path\to\saved\location\name.whl
 ```
 
-## Usage
+## Installing
+
+```cmd
+pip install gohlkegrabber
+```
+
+## Dependencies
+
+Dependencies that will be installed :
+```
+lxml>=4.4.2
+```
+
+## Getting Started
 
 When you create a `GohlkeGrabber`, it automatically download the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
 
@@ -69,3 +82,7 @@ If you create the GohlkeGrabber with a `cached` parameter, it will save the down
 ```python
 gg = GohlkeGrabber(cached='work/cache.html')
 ```
+
+## License
+
+This project is licensed under the MIT license. See [license.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/license.txt).
