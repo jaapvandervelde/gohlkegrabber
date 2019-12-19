@@ -1,4 +1,5 @@
 .idea/
+dist/
+*.egg-info/
 *.py[ocd]
 MANIFEST
-dist/

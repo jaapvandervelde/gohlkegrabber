@@ -1,24 +1,35 @@
 import re
 import operator
+from itertools import zip_longest
 from pathlib import Path
 from urllib import request
 from lxml import html
 from io import BytesIO
+from sys import version_info
 
 
-def version_compare(v1_str, compare_operator, v2_str=None):
+def _compare_version_parts(op, p1, p2):
+    matches = [re.match(r'(\d*)(.*)', p) for p in [p1, p2]]
+    if not all(matches):
+        raise SyntaxError(f'Unexpected version part {p1}, {p2}')
+    return (op(int(matches[0].group(1)), int(matches[1].group(1))) or
+            (matches[0].group(1) == matches[1].group(1) and op(matches[0].group(2), matches[1].group(2))))
+
+
+def version_compare(v1: str, compare_operator, v2: str = None):
     """
     Determines Boolean value for when the compare operator is applied to the version strings
-    :param v1_str: a version string of the form x.y[.z]
+    :param v1: a version string of the form x.y[.z]
     :param compare_operator: any of '>', '<', '==', '<=', '>='
-    :param v2_str: a version string of the form x.y[.z]
+    :param v2: a version string of the form x.y[.z]
     :return: bool, e.g. '1.2', '>=', '0.9' would be True
     """
-    if v2_str is None:
-        if compare_operator[0] in '<>' and compare_operator[1] != '=':
-            compare_operator, v2_str = compare_operator[0], compare_operator[1:]
-        else:
-            compare_operator, v2_str = compare_operator[0:2], compare_operator[2:]
+    # if compare_operator has both the operator and the version to compare to e.g. '<=1.0'
+    if v2 is None:
+        match = re.match('([<>=]+)(.*)', compare_operator)
+        if not match:
+            raise SyntaxError(f'{compare_operator} is not a valid combination of operator and version string.')
+        compare_operator, v2 = match.group(1), match.group(2)
 
     op = \
         operator.eq if compare_operator == '==' else \
@@ -28,13 +39,13 @@ def version_compare(v1_str, compare_operator, v2_str=None):
         operator.gt if compare_operator == '>=' else None
 
     if op is None:
-        raise SyntaxError(f'Unknown compare operator {compare_operator}')
+        raise SyntaxError(f'{compare_operator} is not a valid operator.')
 
-    v1 = v1_str.split('.')
-    v2 = v2_str.split('.')
+    v1 = v1.split('.')
+    v2 = v2.split('.')
 
-    for p1, p2 in zip(v1, v2):
-        if op(p1, p2) and compare_operator != '==':
+    for p1, p2 in zip_longest(v1, v2, fillvalue='0'):
+        if _compare_version_parts(op, p1, p2) and compare_operator != '==':
             return True
         elif p1 != p2:
             return False
@@ -46,7 +57,7 @@ class GohlkeGrabber:
     def __init__(self, cached=None):
         """
         When created, the GohlkeGrabber downloads the listed packages on https://www.lfd.uci.edu/~gohlke/pythonlibs
-        :param cached: when provided, the index will be loaded from here if it exists, written after load if it doesn't
+        :param cached: when provided, index will be loaded from this file if it exists, or written to it after download
         """
         self.index_root = 'https://www.lfd.uci.edu/~gohlke/pythonlibs'
         self.download_root = 'https://download.lfd.uci.edu/pythonlibs/'
@@ -65,7 +76,7 @@ class GohlkeGrabber:
 
     def reload(self):
         """
-        Calling will force a reload of the index, even if it was loaded from cache previously
+        Calling will force a reload of the index off the website, even if it was loaded from cache previously
         :return: None
         """
         response = request.urlopen(self.index_root)
@@ -127,13 +138,15 @@ class GohlkeGrabber:
         :param overwrite: whether to overwrite the file to download, if it exists
         :param version: a specific version, if multiple are available; None results in the most recent
         :param build: a specific build, or the most recent if None
-        :param python: a specific python version, or the most recent if None
+        :param python: a specific python version, or the most recent if None (pass True for current version)
         :param abi: a specific python ABI, or the 'm' ABI matching the python version if None
         :param platform: either 'win32' or 'win_amd64' (the default)
         :return: a dict with the actual values for all the function parameters for the downloaded package
         """
         versions = self.packages[identifier]
         best_match = None
+        if python is True:
+            python = f'{version_info.major}.{version_info.minor}'
         for _, a in versions.items():
             if version:
                 if version[0] in '>=<':

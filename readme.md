@@ -13,7 +13,7 @@ pip install path\to\saved\location\name.whl
 
 ## Usage
 
-When you create a `GohlkeGrabber`, it automatically grabs the web page and figures out all the packages on offer. Of course, this requires an active connection to the web (the first time at least, see below). 
+When you create a `GohlkeGrabber`, it automatically download the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
 
 You can list them like so:
 ```python
