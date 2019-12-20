@@ -37,7 +37,7 @@ print(list(gg.packages))
 Note that `.packages` is a `dict` - of course you can just use the dictionary directly and the data therein yourself as well. For example, this is what the start of the `numpy` entry looks like:
 ```python
 {
-  'numpy‑1.16.5+mkl‑cp27‑cp27m‑win32.whl': {
+  'numpy-1.16.5+mkl-cp27-cp27m-win32.whl': {
     'link': 'https://download.lfd.uci.edu/pythonlibs/t7epjj8p/numpy-1.16.5+mkl-cp27-cp27m-win32.whl',
     'version': '1.16.5+mkl',
     'build': None,
@@ -45,7 +45,7 @@ Note that `.packages` is a `dict` - of course you can just use the dictionary di
     'abi': 'cp27m',
     'platform': 'win32'
   },
-  'numpy‑1.16.5+mkl‑cp27‑cp27m‑win_amd64.whl': ...
+  'numpy-1.16.5+mkl-cp27-cp27m-win_amd64.whl': ...
 }
 ```
 
