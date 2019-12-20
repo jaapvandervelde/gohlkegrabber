@@ -4,7 +4,7 @@ Simple script to download .whl packages from the pre-built Python packages at ht
 
 Christoph Gohlke maintains 32-bit and 64-bit binaries for many popular scientific Python packages. These can save you some trouble in cases where getting the package from PyPI (using `pip install package_name`) causes pip to try and build underlying C or C++ code. This can of course be made to work on Windows, but requires the installation and configuration of a C/++ compiler and libraries - both of which come standard with a Linux installation, but not with Windows.
 
-So, if you have issues installing a package, you trust Gohlke's build, and you want something easy that helps automate the download, grab a copy of [gohlke_grabber.py](gohlke-grabber/gohlke_grabber.py) and call it like shown below or in [download.py](example/download.py).
+So, if you have issues installing a package, you trust Gohlke's build, and you want something easy that helps automate the download, grab a copy of [gohlkegrabber.py](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/gohlkegrabber/gohlkegrabber.py) and call it like shown below or in [download.py](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/example/download.py).
 
 Of course, once you have a wheel (a file with the `.whl` extension), you can install it using:
 ```cmd
@@ -85,4 +85,4 @@ gg = GohlkeGrabber(cached='work/cache.html')
 
 ## License
 
-This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/license.txt).
+This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/LICENSE.txt).
