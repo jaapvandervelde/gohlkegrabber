@@ -14,7 +14,7 @@ setup(
   author='BMT, Jaap van der Velde',
   author_email='jaap.vandervelde@bmtglobal.com',
   url='https://github.com/jaapvandervelde/gohlkegrabber',
-  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v0.2.2.tar.gz',
+  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v0.2.4.tar.gz',
   keywords=['package', 'download', 'gohlke', 'wheel'],
   install_requires=[
       'lxml>=4.4.2'
