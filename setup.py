@@ -6,7 +6,7 @@ with open("README.md", "r") as rm:
 setup(
   name='gohlkegrabber',
   packages=['gohlkegrabber'],
-  version='0.2.2',
+  version='0.2.4',
   license='MIT',
   description='Simple script to download .whl packages from www.lfd.uci.edu/~gohlke/pythonlibs.',
   long_description=long_description,

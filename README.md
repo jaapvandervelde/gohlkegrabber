@@ -85,4 +85,4 @@ gg = GohlkeGrabber(cached='work/cache.html')
 
 ## License
 
-This project is licensed under the MIT license. See [license.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/license.txt).
+This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/license.txt).
