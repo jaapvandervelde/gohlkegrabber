@@ -26,12 +26,21 @@ lxml>=4.4.2
 
 ## Getting Started
 
-When you create a `GohlkeGrabber`, it automatically download the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
+### Quick
 
-You can list them like so:
+After installing, to get a recent copy of `gdal`:
 ```python
 from gohlkegrabber import GohlkeGrabber
 gg = GohlkeGrabber()
+gg.retrieve('c:/temp', 'gdal')
+```
+
+### In greater detail
+
+When you create a `GohlkeGrabber`, it automatically download the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
+
+You can list the available packages:
+```python
 print(list(gg.packages))
 ```
 Note that `.packages` is a `dict` - of course you can just use the dictionary directly and the data therein yourself as well. For example, this is what the start of the `numpy` entry looks like:
