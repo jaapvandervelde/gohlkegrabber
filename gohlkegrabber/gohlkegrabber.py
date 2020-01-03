@@ -24,6 +24,9 @@ def version_compare(v1: str, compare_operator, v2: str = None):
     :param v2: a version string of the form x.y[.z]
     :return: bool, e.g. '1.2', '>=', '0.9' would be True
     """
+    if not v1:
+        return False
+
     # if compare_operator has both the operator and the version to compare to e.g. '<=1.0'
     if v2 is None:
         match = re.match('([<>=]+)(.*)', compare_operator)
