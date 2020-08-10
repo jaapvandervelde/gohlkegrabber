@@ -99,6 +99,9 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.0
+- Flipped default for `python` parameter, favouring the current Python over the most recent
+
 0.2.9
 - added a user agent header field, as the site no longer serves a basic Python client
 
