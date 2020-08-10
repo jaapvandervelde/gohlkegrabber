@@ -95,3 +95,9 @@ gg = GohlkeGrabber(cached='work/cache.html')
 ## License
 
 This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/LICENSE.txt).
+
+
+## Change log
+
+0.2.8
+- added a user agent header field, as the site no longer serves a basic Python client

@@ -57,6 +57,15 @@ def version_compare(v1: str, compare_operator, v2: str = None):
 
 
 class GohlkeGrabber:
+    def url_open(self, url):
+        response = request.urlopen(request.Request(url, headers={'User-Agent': self.user_agent}))
+        return response
+
+    def url_retrieve(self, url, filename):
+        response = request.urlopen(request.Request(url, headers={'User-Agent': self.user_agent}))
+        with open(filename, 'wb') as f:
+            f.write(response.read())
+
     def __init__(self, cached=None):
         """
         When created, the GohlkeGrabber downloads the listed packages on https://www.lfd.uci.edu/~gohlke/pythonlibs
@@ -64,6 +73,10 @@ class GohlkeGrabber:
         """
         self.index_root = 'https://www.lfd.uci.edu/~gohlke/pythonlibs'
         self.download_root = 'https://download.lfd.uci.edu/pythonlibs/'
+        self.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
+                          'AppleWebKit/537.36 (KHTML, like Gecko) ' \
+                          'Chrome/84.0.4147.105 Safari/537.36'
+
         self.index = None
         self.packages = {}
         self._cached = cached
@@ -82,7 +95,7 @@ class GohlkeGrabber:
         Calling will force a reload of the index off the website, even if it was loaded from cache previously
         :return: None
         """
-        response = request.urlopen(self.index_root)
+        response = self.url_open(self.index_root)
         self.index = response.read()
         if self._cached:
             with open(self._cached, 'wb') as f:
@@ -183,7 +196,7 @@ class GohlkeGrabber:
         if best_match is not None:
             p = Path(save_location) / Path(best_match['link']).name
             if not p.is_file() or overwrite:
-                request.urlretrieve(best_match['link'], p)
+                self.url_retrieve(best_match['link'], p)
         else:
             p = None
 
