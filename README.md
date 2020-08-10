@@ -99,5 +99,8 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
-0.2.8
+0.2.9
 - added a user agent header field, as the site no longer serves a basic Python client
+
+0.2.8
+- open release, version conflict
