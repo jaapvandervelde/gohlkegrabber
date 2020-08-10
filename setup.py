@@ -6,7 +6,7 @@ with open("README.md", "r") as rm:
 setup(
   name='gohlkegrabber',
   packages=['gohlkegrabber'],
-  version='0.2.9',
+  version='0.3.0',
   license='MIT',
   description='Simple script to download .whl packages from www.lfd.uci.edu/~gohlke/pythonlibs.',
   long_description=long_description,
@@ -14,7 +14,7 @@ setup(
   author='BMT, Jaap van der Velde',
   author_email='jaap.vandervelde@bmtglobal.com',
   url='https://github.com/jaapvandervelde/gohlkegrabber',
-  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v0.2.9.tar.gz',
+  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v0.3.0.tar.gz',
   keywords=['package', 'download', 'gohlke', 'wheel'],
   install_requires=[
       'lxml>=4.4.2'
