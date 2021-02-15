@@ -226,10 +226,7 @@ def cli_entry_point():
     print(f'Attempting to download package {args.identifier} to {args.save_location}...')
     try:
         p, best_match = gg.retrieve(**vars(args))
-        if best_match is None:
-            print('Unable to find a matching package version at https://www.lfd.uci.edu/~gohlke/pythonlibs')
-        else:
-            print(f'Finished download to {p}')
+        print(f'Finished download to {p}')
     except HTTPError as e:
         print(f'Error trying to download: {gg.last_retrieve}, {e}')
 

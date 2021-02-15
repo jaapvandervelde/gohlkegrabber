@@ -11,6 +11,8 @@ Of course, once you have a wheel (a file with the `.whl` extension), you can ins
 pip install path\to\saved\location\name.whl
 ```
 
+<i>Please don't bother Christoph Gohlke if there are issues with this tool. If it breaks, that's my fault and you should bother me with it, or ideally propose how to fix it. He just provides a valuable service at no cost and merely deserves credit.</i>
+
 ## Installing
 
 ```cmd
@@ -33,6 +35,15 @@ After installing, to get a recent copy of `gdal`:
 from gohlkegrabber import GohlkeGrabber
 gg = GohlkeGrabber()
 gg.retrieve('c:/temp', 'gdal')
+```
+
+Or, directly from the command line:
+```commandline
+ggrab c:\temp gdal
+```
+Note that `ggrab` takes the same arguments as the `.retrieve()` method, except that positional arguments come after named arguments, as this is the convention on OS CLIs. For example:
+```commandline
+ggrab -v 1.18 --platform win32 .\bin numpy
 ```
 
 ### In greater detail
@@ -95,3 +106,9 @@ gg = GohlkeGrabber(cached='work/cache.html')
 ## License
 
 This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/LICENSE.txt).
+
+
+## Changelog
+
+- 0.2.9<br>Added command line tool. Added 'User-Agent' to file retrieve as well as index.
+- 0.2.8<br>Pythonlibs page seems to refuse Python user agent, so passing 'User-Agent' 'Custom' header.
