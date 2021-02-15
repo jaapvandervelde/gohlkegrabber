@@ -1,5 +1,7 @@
 .idea/
 dist/
+cache/
+build/
 *.egg-info/
 *.py[ocd]
 MANIFEST

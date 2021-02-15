@@ -225,17 +225,21 @@ def cli_entry_point():
                                                  ' from https://www.lfd.uci.edu/~gohlke/pythonlibs')
     parser.add_argument('save_location', help='Path to save the wheel to, use "." for current directory.')
     parser.add_argument('identifier', help='Name of the package to download, e.g. "numpy"')
-    parser.add_argument('--overwrite', help='Whether to overwrite existing files', type=str2bool, default=False)
-    parser.add_argument('--version', help='Version of the package to download,'
-                                          ' e.g. "1.18", or "<1.19", most recent if none')
-    parser.add_argument('--build', help='Specific build of the package to download, most recent if none')
-    parser.add_argument('--python', help='Python version required, e.g. "3.6", or "<3.7"')
-    parser.add_argument('--abi', help='A specific python ABI, or the "m" ABI matching the Python version if none')
-    parser.add_argument('--platform', help='Either "win32" or "win_amd64" (the default)', default='win_amd64')
+    parser.add_argument('-o', '--overwrite', help='Whether to overwrite existing files', type=str2bool, default=False)
+    parser.add_argument('-v', '--version', help='Version of the package to download,'
+                                                ' e.g. "1.18", or "<1.19", most recent if none')
+    parser.add_argument('-b', '--build', help='Specific build of the package to download, most recent if none')
+    parser.add_argument('-p', '--python', help='Python version required, e.g. "3.6", or "<3.7"')
+    parser.add_argument('-a', '--abi', help='A specific python ABI, or the "m" ABI matching the Python version if none')
+    parser.add_argument('-pf', '--platform', help='Either "win32" or "win_amd64" (the default)', default='win_amd64')
+    parser.add_argument('-c', '--cache', help='File path to store a cached copy (html) of the index, not caching if none')
+
     args = parser.parse_args()
+    cache_file = args.cache
+    del(args.cache)
 
     print('Getting index...')
-    gg = GohlkeGrabber()
+    gg = GohlkeGrabber(cached=cache_file)
     print(f'Attempting to download package {args.identifier} to {args.save_location}...')
     try:
         p, best_match = gg.retrieve(**vars(args))

@@ -45,10 +45,14 @@ Note that `ggrab` takes the same arguments as the `.retrieve()` method, except t
 ```commandline
 ggrab -v 1.18 --platform win32 .\bin numpy
 ```
+The CLI command `ggrab` also takes an additional argument `--cache` if you want to specify a cached index file to use, for example:
+```commandline
+ggrab --cache c:\temp\cache.html . numpy
+```
 
 ### In greater detail
 
-When you create a `GohlkeGrabber`, it automatically download the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
+When you create a `GohlkeGrabber`, it automatically downloads the index from the website (or reads a cached copy) and figures out all the packages on offer. Of course, this requires an active connection to the web. 
 
 You can list the available packages:
 ```python
@@ -108,15 +112,15 @@ gg = GohlkeGrabber(cached='work/cache.html')
 This project is licensed under the MIT license. See [LICENSE.txt](https://github.com/jaapvandervelde/gohlkegrabber/blob/master/LICENSE.txt).
 
 
-## Changelog
-
-- 0.2.8<br>Pythonlibs page seems to refuse Python user agent, so passing 'User-Agent' 'Custom' header.
-=======
 ## Change log
+
+0.3.2
+- Versioning issues resolved 
+- Documentation fix
+- Short command line switches
 
 0.3.1
 - Added command line tool. Added 'User-Agent' to file retrieve as well as index.
-
 
 0.3.0
 - Flipped default for `python` parameter, favouring the current Python over the most recent
