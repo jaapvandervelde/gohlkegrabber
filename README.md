@@ -110,5 +110,19 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Changelog
 
-- 0.2.9<br>Added command line tool. Added 'User-Agent' to file retrieve as well as index.
 - 0.2.8<br>Pythonlibs page seems to refuse Python user agent, so passing 'User-Agent' 'Custom' header.
+=======
+## Change log
+
+0.3.1
+- Added command line tool. Added 'User-Agent' to file retrieve as well as index.
+
+
+0.3.0
+- Flipped default for `python` parameter, favouring the current Python over the most recent
+
+0.2.9
+- added a user agent header field, as the site no longer serves a basic Python client
+
+0.2.8
+- open release, version conflict
