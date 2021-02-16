@@ -1,4 +1,5 @@
 from setuptools import setup
+from gohlkegrabber import __version__
 
 with open("README.md", "r") as rm:
     long_description = rm.read()
@@ -6,7 +7,7 @@ with open("README.md", "r") as rm:
 setup(
   name='gohlkegrabber',
   packages=['gohlkegrabber'],
-  version='0.3.2',
+  version=__version__,
   license='MIT',
   description='Simple script to download .whl packages from www.lfd.uci.edu/~gohlke/pythonlibs.',
   long_description=long_description,
@@ -14,7 +15,7 @@ setup(
   author='BMT, Jaap van der Velde',
   author_email='jaap.vandervelde@bmtglobal.com',
   url='https://github.com/jaapvandervelde/gohlkegrabber',
-  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v0.3.2.tar.gz',
+  download_url='https://github.com/jaapvandervelde/gohlkegrabber/archive/v'+__version__+'.tar.gz',
   keywords=['package', 'download', 'gohlke', 'wheel'],
   install_requires=[
       'lxml>=4.4.2'

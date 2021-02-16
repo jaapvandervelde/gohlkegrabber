@@ -49,6 +49,19 @@ The CLI command `ggrab` also takes an additional argument `--cache` if you want 
 ```commandline
 ggrab --cache c:\temp\cache.html . numpy
 ```
+If you run `ggrab` from the command line, you can also pass `--bare` or `-x` 
+```commandline
+pip install gohklegrabber
+for /f "tokens=*" %i in ('ggrab --bare c:\temp numpy') do set ggrab_last_package=%i
+pip install %ggrab_last_package%
+```
+Or in a batch file:
+```commandline
+@echo off
+pip install gohklegrabber
+for /f "tokens=*" %%i in ('ggrab --bare c:\temp numpy') do set ggrab_last_package=%%i
+pip install %ggrab_last_package%
+```
 
 ### In greater detail
 
@@ -113,6 +126,10 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 
 ## Change log
+
+0.3.3
+- 'Bare' mode added to capture written wheel
+- Project structure cleanup (`script` folder, version location)
 
 0.3.2
 - Versioning issues resolved 

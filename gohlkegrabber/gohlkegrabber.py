@@ -82,6 +82,7 @@ class GohlkeGrabber:
         self.index = None
         self.packages = {}
         self._cached = cached
+        self.last_retrieve = None
         if self._cached and Path(self._cached).is_file():
             with open(self._cached, 'rb') as f:
                 self.index = f.read()
@@ -118,7 +119,7 @@ class GohlkeGrabber:
             mi = mi.replace('&#38;', '&')
             return dl1(ml, mi)
 
-        match = re.search(r'dl\(\[(.*)\], "(.*?)"', js_link)
+        match = re.search(r'dl\(\[(.*)], "(.*?)"', js_link)
         if match:
             link = dl(list(map(int, match.group(1).split(','))), match.group(2))
             parts = Path(link).stem.split('-')
@@ -211,44 +212,49 @@ class GohlkeGrabber:
 
 
 def cli_entry_point():
-    def str2bool(v):
-        if isinstance(v, bool):
-            return v
-        if v.lower() in ('yes', 'true', 't', 'y', '1'):
-            return True
-        elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-            return False
-        else:
-            raise argparse.ArgumentTypeError('Boolean value expected.')
-
     parser = argparse.ArgumentParser(description='Retrieve pre-built binaries'
                                                  ' from https://www.lfd.uci.edu/~gohlke/pythonlibs')
     parser.add_argument('save_location', help='Path to save the wheel to, use "." for current directory.')
     parser.add_argument('identifier', help='Name of the package to download, e.g. "numpy"')
-    parser.add_argument('-o', '--overwrite', help='Whether to overwrite existing files', type=str2bool, default=False)
+    parser.add_argument('-o', '--overwrite', help='Overwrite existing files',
+                        action='store_const', const=True, default=False)
     parser.add_argument('-v', '--version', help='Version of the package to download,'
                                                 ' e.g. "1.18", or "<1.19", most recent if none')
     parser.add_argument('-b', '--build', help='Specific build of the package to download, most recent if none')
     parser.add_argument('-p', '--python', help='Python version required, e.g. "3.6", or "<3.7"')
     parser.add_argument('-a', '--abi', help='A specific python ABI, or the "m" ABI matching the Python version if none')
     parser.add_argument('-pf', '--platform', help='Either "win32" or "win_amd64" (the default)', default='win_amd64')
-    parser.add_argument('-c', '--cache', help='File path to store a cached copy (html) of the index, not caching if none')
+    parser.add_argument('-c', '--cache', help='File path to store a cached copy (html) of the index,'
+                                              ' not caching if none')
+    parser.add_argument('-x', '--bare', help='Only print the name of the resulting wheel (if any, for capture)',
+                        action='store_const', const=True)
 
     args = parser.parse_args()
     cache_file = args.cache
-    del(args.cache)
+    bare = bool(args.bare) if args.bare is not None else False
+    del args.cache
+    del args.bare
 
-    print('Getting index...')
+    if not bare:
+        print('Getting index...')
     gg = GohlkeGrabber(cached=cache_file)
-    print(f'Attempting to download package {args.identifier} to {args.save_location}...')
+    if not bare:
+        print(f'Attempting to download package "{args.identifier}" to "{args.save_location}" ...')
     try:
         p, best_match = gg.retrieve(**vars(args))
         if best_match is None:
-            print('Unable to find a matching package version at https://www.lfd.uci.edu/~gohlke/pythonlibs')
+            if not bare:
+                print('Unable to find a matching package version at https://www.lfd.uci.edu/~gohlke/pythonlibs')
+            exit(1)
         else:
-            print(f'Finished download to {p}')
+            if not bare:
+                print(f'Finished download to "{p}"')
+            else:
+                print(p)
     except HTTPError as e:
-        print(f'Error trying to download: {gg.last_retrieve}, {e}')
+        if not bare:
+            print(f'Error trying to download: {gg.last_retrieve}, {e}')
+        exit(1)
 
 
 if __name__ == '__main__':
