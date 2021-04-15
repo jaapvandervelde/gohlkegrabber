@@ -127,6 +127,9 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.4
+- Improved message for missing packages (thanks )
+
 0.3.3
 - 'Bare' mode added to capture written wheel
 - Project structure cleanup (`script` folder, version location)

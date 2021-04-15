@@ -58,6 +58,10 @@ def version_compare(v1: str, compare_operator, v2: str = None):
     return compare_operator in ['==', '>=', '<=']
 
 
+class GrabError(Exception):
+    pass
+
+
 class GohlkeGrabber:
     def url_open(self, url):
         response = request.urlopen(request.Request(url, headers={'User-Agent': self.user_agent}))
@@ -163,6 +167,9 @@ class GohlkeGrabber:
         :param platform: either 'win32' or 'win_amd64' (the default)
         :return: a dict with the actual values for all the function parameters for the downloaded package
         """
+        if identifier not in self.packages:
+            raise GrabError(f'Could not download "{identifier}", '
+                            f'possibly it is not available, or in the "Misc" category.')
         versions = self.packages[identifier]
         best_match = None
         if python is True:
@@ -251,6 +258,8 @@ def cli_entry_point():
                 print(f'Finished download to "{p}"')
             else:
                 print(p)
+    except GrabError as e:
+        print(e)
     except HTTPError as e:
         if not bare:
             print(f'Error trying to download: {gg.last_retrieve}, {e}')
