@@ -127,8 +127,11 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.5
+- Downgraded Python requirement to 3.6
+
 0.3.4
-- Improved message for missing packages (thanks )
+- Improved message for missing packages
 
 0.3.3
 - 'Bare' mode added to capture written wheel

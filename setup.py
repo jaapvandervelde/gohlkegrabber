@@ -25,7 +25,7 @@ setup(
     'Intended Audience :: Developers',
     'Topic :: Software Development :: Build Tools',
     'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.6',
   ],
   entry_points={
     'console_scripts': ['ggrab=gohlkegrabber:cli_entry_point'],
