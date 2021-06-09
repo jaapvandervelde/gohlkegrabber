@@ -1,5 +1,5 @@
 from setuptools import setup
-from gohlkegrabber import __version__
+from gohlkegrabber.version import __version__
 
 with open("README.md", "r") as rm:
     long_description = rm.read()
