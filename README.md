@@ -127,6 +127,9 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.8
+- fixed behaviour to download current Python version of package unless 'last' is specified for '--python'
+
 0.3.6 / 0.3.7
 - Changed version import for setup.py, as it was causing dependency problems
 

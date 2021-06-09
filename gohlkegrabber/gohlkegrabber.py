@@ -154,7 +154,7 @@ class GohlkeGrabber:
             }
 
     def retrieve(self, save_location, identifier,
-                 overwrite=False, version=None, build=None, python=True, abi=None, platform='win_amd64'):
+                 overwrite=False, version=None, build=None, python=None, abi=None, platform='win_amd64'):
         """
         Download a wheel for a specific package
         :param save_location: directory to save the downloaded package to (if any)
@@ -162,7 +162,7 @@ class GohlkeGrabber:
         :param overwrite: whether to overwrite the file to download, if it exists
         :param version: a specific version, if multiple are available; None results in the most recent
         :param build: a specific build, or the most recent if None
-        :param python: a specific python version, or the most recent if None (pass True for current version)
+        :param python: a specific python version, or the current if None (pass 'last' for most recent)
         :param abi: a specific python ABI, or the 'm' ABI matching the python version if None
         :param platform: either 'win32' or 'win_amd64' (the default)
         :return: a dict with the actual values for all the function parameters for the downloaded package
@@ -172,7 +172,9 @@ class GohlkeGrabber:
                             f'possibly it is not available, or in the "Misc" category.')
         versions = self.packages[identifier]
         best_match = None
-        if python is True:
+        if python == 'last':
+            python = None
+        elif python is None:
             python = f'{version_info.major}.{version_info.minor}'
         for _, a in versions.items():
             if version:
@@ -228,7 +230,7 @@ def cli_entry_point():
     parser.add_argument('-v', '--version', help='Version of the package to download,'
                                                 ' e.g. "1.18", or "<1.19", most recent if none')
     parser.add_argument('-b', '--build', help='Specific build of the package to download, most recent if none')
-    parser.add_argument('-p', '--python', help='Python version required, e.g. "3.6", or "<3.7"')
+    parser.add_argument('-p', '--python', help='Python version required, e.g. "3.6", "<3.7", or "last"')
     parser.add_argument('-a', '--abi', help='A specific python ABI, or the "m" ABI matching the Python version if none')
     parser.add_argument('-pf', '--platform', help='Either "win32" or "win_amd64" (the default)', default='win_amd64')
     parser.add_argument('-c', '--cache', help='File path to store a cached copy (html) of the index,'
