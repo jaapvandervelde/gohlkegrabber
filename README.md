@@ -127,7 +127,7 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
-0.3.6
+0.3.6 / 0.3.7
 - Changed version import for setup.py, as it was causing dependency problems
 
 0.3.5
