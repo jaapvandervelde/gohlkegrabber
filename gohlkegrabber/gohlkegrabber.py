@@ -1,5 +1,5 @@
 import re
-import ssl
+import gzip
 import argparse
 import operator
 from itertools import zip_longest
@@ -113,7 +113,11 @@ class GohlkeGrabber:
         """
         req = request.Request(self.index_root, headers=self.headers)
         response = request.urlopen(req)
-        self.index = response.read()
+        if response.info().get('Content-Encoding') == 'gzip':
+            f = gzip.GzipFile(fileobj=BytesIO(response.read()))
+            self.index = f.read()
+        else:
+            self.index = response.read()
         if self._cached:
             with open(self._cached, 'wb') as f:
                 f.write(self.index)
