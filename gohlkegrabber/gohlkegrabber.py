@@ -1,4 +1,5 @@
 import re
+import ssl
 import argparse
 import operator
 from itertools import zip_longest
@@ -64,11 +65,11 @@ class GrabError(Exception):
 
 class GohlkeGrabber:
     def url_open(self, url):
-        response = request.urlopen(request.Request(url, headers={'User-Agent': self.user_agent}))
+        response = request.urlopen(request.Request(url, headers=self.headers))
         return response
 
     def url_retrieve(self, url, filename):
-        response = request.urlopen(request.Request(url, headers={'User-Agent': self.user_agent}))
+        response = request.urlopen(request.Request(url, headers=self.headers))
         with open(filename, 'wb') as f:
             f.write(response.read())
 
@@ -79,9 +80,17 @@ class GohlkeGrabber:
         """
         self.index_root = 'https://www.lfd.uci.edu/~gohlke/pythonlibs'
         self.download_root = 'https://download.lfd.uci.edu/pythonlibs/'
-        self.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
-                          'AppleWebKit/537.36 (KHTML, like Gecko) ' \
-                          'Chrome/84.0.4147.105 Safari/537.36'
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) "
+                          "Brave Chrome/83.0.4103.116 "
+                          "Safari/537.36",
+            "Accept": "*/*",
+            "Cache-Control": "no-cache",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Referer": "https://www.lfd.uci.edu/~gohlke/pythonlibs",
+            "Connection": "keep-alive",
+        }
 
         self.index = None
         self.packages = {}
@@ -102,7 +111,7 @@ class GohlkeGrabber:
         Calling will force a reload of the index off the website, even if it was loaded from cache previously
         :return: None
         """
-        req = request.Request(self.index_root, headers={'User-Agent': 'custom'})
+        req = request.Request(self.index_root, headers=self.headers)
         response = request.urlopen(req)
         self.index = response.read()
         if self._cached:
@@ -153,6 +162,23 @@ class GohlkeGrabber:
                 for anchor in [li for li in list_item.xpath('ul/li/a') if Path(li.text).suffix == '.whl']
             }
 
+    def match_identifier(self, identifier):
+        term = identifier.lower()
+        term = term if term.startswith('_') else f'_{term}'
+        # simple case, gohlke added _ to start
+        if term in self.packages:
+            return term
+        else:
+            matches = [x for x in self.packages if x.starts_with(term)]
+            if len(matches) > 1:
+                raise GrabError(f'Could not download "{identifier}", '
+                                f'because it could match any of {", ".join(matches)}.')
+            elif len(matches) == 0:
+                raise GrabError(f'Could not download "{identifier}", '
+                                f'possibly it is not available, or in the "Misc" category.')
+            else:
+                return matches[0]
+
     def retrieve(self, save_location, identifier,
                  overwrite=False, version=None, build=None, python=None, abi=None, platform='win_amd64'):
         """
@@ -167,9 +193,8 @@ class GohlkeGrabber:
         :param platform: either 'win32' or 'win_amd64' (the default)
         :return: a dict with the actual values for all the function parameters for the downloaded package
         """
-        if identifier not in self.packages:
-            raise GrabError(f'Could not download "{identifier}", '
-                            f'possibly it is not available, or in the "Misc" category.')
+        identifier = self.match_identifier(identifier)
+
         versions = self.packages[identifier]
         best_match = None
         if python == 'last':

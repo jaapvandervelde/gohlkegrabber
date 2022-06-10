@@ -127,6 +127,10 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.9
+- adjusted to change on website where identifiers are now prefixed with `_` 
+- added simple matching for partial identifiers
+
 0.3.8
 - fixed behaviour to download current Python version of package unless 'last' is specified for '--python'
 
