@@ -250,6 +250,11 @@ class GohlkeGrabber:
 
 
 def cli_entry_point():
+    print('NOTE: the service used by this tool has been announced to be discontinued\n'
+          'before July 2022", so this tool may stop working when that happens. There\n'
+          'is nothing to be done within reason from my end. I am sorry, but thankful\n'
+          'to mr. Gohlke and their employer for providing the service while they did.')
+
     parser = argparse.ArgumentParser(description='Retrieve pre-built binaries'
                                                  ' from https://www.lfd.uci.edu/~gohlke/pythonlibs')
     parser.add_argument('save_location', help='Path to save the wheel to, use "." for current directory.')

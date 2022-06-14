@@ -1,5 +1,7 @@
 # Gohlke Grabber
 
+**NOTICE**: On 12 June 2022, this message appeared on the site Christoph Gohlke maintained: "Updated on 12 June 2022 at 20:19 UTC. Funding for the Laboratory for Fluorescence Dynamics has ceased. This service will be discontinued before July 2022." - this means that this tool will likely stop working as well; there's nothing I can do about that within reason, so I will likely remove this project once that has passed. 
+
 Simple script to download .whl packages from the pre-built Python packages at https://www.lfd.uci.edu/~gohlke/pythonlibs.
 
 Christoph Gohlke maintains 32-bit and 64-bit binaries for many popular scientific Python packages. These can save you some trouble in cases where getting the package from PyPI (using `pip install package_name`) causes pip to try and build underlying C or C++ code. This can of course be made to work on Windows, but requires the installation and configuration of a C/++ compiler and libraries - both of which come standard with a Linux installation, but not with Windows.
@@ -126,6 +128,9 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 
 ## Change log
+
+0.3.11
+- Added a notice with regards to the service used being discontinued - this tool will likely need to be discontinued as well.
 
 0.3.10
 - support gzipped index html
