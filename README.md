@@ -1,6 +1,6 @@
 # Gohlke Grabber
 
-**NOTICE**: On 12 June 2022, this message appeared on the site Christoph Gohlke maintained: "Updated on 12 June 2022 at 20:19 UTC. Funding for the Laboratory for Fluorescence Dynamics has ceased. This service will be discontinued before July 2022." - this means that this tool will likely stop working as well; there's nothing I can do about that within reason, so I will likely remove this project once that has passed. 
+**NOTICE**: On 12 June 2022, this message appeared on the site Christoph Gohlke maintains: "Updated on 12 June 2022 at 20:19 UTC. Funding for the Laboratory for Fluorescence Dynamics has ceased. This service will be discontinued before July 2022." However, later that month this notice disappeared. The status of the site is unclear - this means that this tool may stop working as well; there's nothing I can do about that within reason, so I will likely remove this project if Gohlke can no longer maintain their site. 
 
 Simple script to download .whl packages from the pre-built Python packages at https://www.lfd.uci.edu/~gohlke/pythonlibs.
 
@@ -13,7 +13,7 @@ Of course, once you have a wheel (a file with the `.whl` extension), you can ins
 pip install path\to\saved\location\name.whl
 ```
 
-<i>Please don't bother Christoph Gohlke if there are issues with this tool. If it breaks, that's my fault and you should bother me with it, or ideally propose how to fix it. He just provides a valuable service at no cost and merely deserves credit.</i>
+<i>Please don't bother Christoph Gohlke or their organisation if there are issues with this tool. If it breaks, that's my fault and you should bother me with it, or ideally propose how to fix it. They just provide a valuable service at no cost and merely deserve credit.</i>
 
 ## Installing
 
@@ -129,8 +129,13 @@ This project is licensed under the MIT license. See [LICENSE.txt](https://github
 
 ## Change log
 
+0.3.12
+- remove notice, as the notice on the source website has been taken down.
+- fix a partial match problem with a `starts_with` typo
+- adjust to change on website where identifiers are now no longer prefixed with `_`; detect similar change 
+
 0.3.11
-- Added a notice with regards to the service used being discontinued - this tool will likely need to be discontinued as well.
+- add a notice with regards to the service used being discontinued - this tool may need to be discontinued as well.
 
 0.3.10
 - support gzipped index html

@@ -168,12 +168,14 @@ class GohlkeGrabber:
 
     def match_identifier(self, identifier):
         term = identifier.lower()
-        term = term if term.startswith('_') else f'_{term}'
+        # in case the website decides to randomly add an underscore once more...
+        if set(key[0] for key in self.packages.keys()) == {'_'}:
+            term = term if term.startswith('_') else f'_{term}'
         # simple case, gohlke added _ to start
         if term in self.packages:
             return term
         else:
-            matches = [x for x in self.packages if x.starts_with(term)]
+            matches = [x for x in self.packages if x.startswith(term)]
             if len(matches) > 1:
                 raise GrabError(f'Could not download "{identifier}", '
                                 f'because it could match any of {", ".join(matches)}.')
@@ -250,11 +252,6 @@ class GohlkeGrabber:
 
 
 def cli_entry_point():
-    print('NOTE: the service used by this tool has been announced to be discontinued\n'
-          'before July 2022", so this tool may stop working when that happens. There\n'
-          'is nothing to be done within reason from my end. I am sorry, but thankful\n'
-          'to mr. Gohlke and their employer for providing the service while they did.')
-
     parser = argparse.ArgumentParser(description='Retrieve pre-built binaries'
                                                  ' from https://www.lfd.uci.edu/~gohlke/pythonlibs')
     parser.add_argument('save_location', help='Path to save the wheel to, use "." for current directory.')
