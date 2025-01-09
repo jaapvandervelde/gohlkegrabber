@@ -251,7 +251,14 @@ class GohlkeGrabber:
         return p, best_match
 
 
+def decommissioned():
+    print('This tool is no longer available. Please have a look at the README.md for more information, and consider using Christoph Gohlke\'s GitHub repos, or get packages from a place like conda-forge.')
+    exit(1)
+
+
 def cli_entry_point():
+    decommissioned()
+
     parser = argparse.ArgumentParser(description='Retrieve pre-built binaries'
                                                  ' from https://www.lfd.uci.edu/~gohlke/pythonlibs')
     parser.add_argument('save_location', help='Path to save the wheel to, use "." for current directory.')

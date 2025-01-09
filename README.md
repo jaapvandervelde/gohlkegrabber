@@ -1,5 +1,7 @@
 # Gohlke Grabber
 
+**NOTICE**: 2024 and onwards. The original site is no longer available. Check [Christoph Gohlke's personal site](https://www.cgohlke.com/) for details, and check his GitHub repos mentioned there for anything you may have hoped to obtain from the original site. Finally, consider using Conda for package management in your project, possibly with the open conda-forge channel. Most of the packages I used to obtain from Gohlke's site are available there. I like [the miniforge distribution](https://github.com/conda-forge/miniforge).
+
 **NOTICE**: On 12 June 2022, this message appeared on the site Christoph Gohlke maintains: "Updated on 12 June 2022 at 20:19 UTC. Funding for the Laboratory for Fluorescence Dynamics has ceased. This service will be discontinued before July 2022." However, later that month this notice disappeared. The status of the site is unclear - this means that this tool may stop working as well; there's nothing I can do about that within reason, so I will likely remove this project if Gohlke can no longer maintain their site. 
 
 Simple script to download .whl packages from the pre-built Python packages at https://www.lfd.uci.edu/~gohlke/pythonlibs.
